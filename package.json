@@ -1,0 +1,26 @@
+{
+  "name": "day42_heroviewer",
+  "version": "1.0.0",
+  "description": "Building the Marvel App with Angular and having different views",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MichaelWDanko/day42_HeroViewer.git"
+  },
+  "author": "Michael W Danko",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MichaelWDanko/day42_HeroViewer/issues"
+  },
+  "homepage": "https://github.com/MichaelWDanko/day42_HeroViewer#readme",
+  "dependencies": {
+    "angular": "^1.5.5",
+    "gulp": "^3.9.1",
+    "gulp-browserify": "^0.5.1",
+    "gulp-sass": "^2.2.0",
+    "underscore": "^1.8.3"
+  }
+}
