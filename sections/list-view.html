@@ -1,0 +1,9 @@
+<h2>list-view</h2>
+<ul>
+    <a href="#/detail">
+        <li ng-click="getDetails(hero)" ng-repeat="hero in heroes">
+            <img ng-src="{{hero.thumbnail.path}}/landscape_incredible.{{hero.thumbnail.extension}}" alt="Image thumbnail">
+            <h2> {{hero.name}} </h2>
+        </li>
+    </a>
+</ul>
