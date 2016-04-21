@@ -1,0 +1,12 @@
+<div id="detailed-view" class="view">
+    <img src="{{current.url}}">
+    <h1> Name: {{current.name}} </h1>
+    <h2> Events: </h2>
+    <ul>
+        <li ng-repeat="event in events" class="event">
+            <h3>{{event.title}}</h3>
+            <p>{{event.available}}</p>
+            <p>{{event.description}} </p>
+        </li>
+    </ul>
+</div>
