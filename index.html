@@ -12,42 +12,12 @@
     </header>
     <ul id="navbar" class="columns">
         <a href="#/list"><li>List View</li></a>
-<!--        <a href="#/detail"><li>Detail View</li></a>-->
+        <a href="#/detail"><li>Detail View</li></a>
+        <a href="#/event"><li>Event View</li></a>
         
     </ul>
     <div id="content" class="columns" ng-view></div>
-<!--
-    <div id="content" ng-controller="MainController" class="columns">
 
-        <div id="search" class="columns">
-            <input type="text" id="search-bar" placeholder="Enter Marvel character's name here..." ng-model="giraffe">
-        </div>
-        
-        <div id="detailed-view" class="view">
-            <img src="{{current.url}}">
-            <h1> Name: {{current.name}} </h1>
-            <h2> Events: </h2>
-            <ul>
-                <li ng-repeat="event in events" class="event">
-                    <h3>{{event.title}}</h3>
-                    <p>{{event.available}}</p>
-                    <p>{{event.description}} </p>
-                </li>
-            </ul>
-        </div>
-
-        <div id="list-view" class="view">
-            <ul>
-                <li ng-click="getDetails(hero)" ng-repeat="hero in heroes | filter:giraffe">
-                    <img src="{{hero.thumbnail.path}}/standard_medium.{{hero.thumbnail.extension}}" alt="Image thumbnail">
-                    <h2> {{hero.name}} </h2>
-                </li>
-            </ul>
-        </div>
-        
-        
-    </div>
--->
 </body>
 
 </html>

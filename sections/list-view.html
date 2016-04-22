@@ -1,8 +1,11 @@
+<div id="list-view" class="view">
+    <p>Saying: {{ hithere }}</p>
 <ul>
-    <a href="#/detail">
-        <li ng-click="getDetails(hero)" ng-repeat="hero in heroes">
+    <a href="#/detail" ng-repeat="hero in heroes">
+        <li ng-click="getDetails(hero)" >
             <img ng-src="{{hero.thumbnail.path}}/landscape_incredible.{{hero.thumbnail.extension}}" alt="Image thumbnail">
             <h2> {{hero.name}} </h2>
         </li>
     </a>
 </ul>
+</div>
