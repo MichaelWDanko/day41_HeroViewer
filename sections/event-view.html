@@ -1,1 +1,16 @@
-<h2>Event View</h2>
+<h1>Character List </h1>
+<!--<h1>Characters of: {{ eventName }} </h1>-->
+<div id="event-detail-view">
+    <ul>
+        <li ng-repeat="character in characters" class="character">
+            <img src="{{character.thumbnail.path}}/standard_large.{{character.thumbnail.extension}}" alt="Hero thumbnail">
+            <div class="character-content">
+                <h2>{{character.name}}</h2>
+                <h3>Total Events: {{totalEvents}}</h3>
+            </div>
+        </li>
+
+    </ul>
+
+
+</div>

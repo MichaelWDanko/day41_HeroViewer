@@ -3,10 +3,12 @@
     <h1> Name: {{current.name}} </h1>
     <h2> Events: </h2>
     <ul>
-        <li ng-repeat="event in events" class="event">
-            <h3>{{event.title}}</h3>
-            <p>{{event.available}}</p>
-            <p>{{event.description}} </p>
-        </li>
+        <a href="#/event/{{event.id}}" ng-repeat="event in events">
+            <li  class="event">
+                <h3>{{event.title}}</h3>
+                <p>{{event.available}}</p>
+                <p>{{event.description}} </p>
+            </li>
+        </a>
     </ul>
 </div>

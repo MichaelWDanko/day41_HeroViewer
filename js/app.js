@@ -1,35 +1,6 @@
 /* jslint browser: true */
 /* jslint esnext: true */
 
-//app.controller('ListViewController2', function ($scope, $http) {
-//    //    $scope.name = 'Mike';
-//    //    $scope.heroes = [];
-//    //    $scope.current = {
-//    //        name: '',
-//    //        url: '',
-//    //        id: '',
-//    //    };
-//    //    $scope.giraffe = '';
-//    //    $scope.events = [];
-//    //    $scope.getDetails = function (hero) {
-//    //        console.log('Clicked on ' + hero.name + ' who has the ID: ' + hero.id);
-//    //        $scope.current.name = hero.name;
-//    //        $scope.current.url = (hero.thumbnail.path + '/landscape_incredible.' + hero.thumbnail.extension);
-//    //        $scope.current.id = hero.id;
-//            $http({
-//                method: 'get',
-//               "http://gateway.marvel.com:80/v1/public/characters/" + hero.id + "/events?orderBy=-name&limit=5&apikey=0e7466623241b56d92fc74e4d5039354",
-//              "http://gateway.marvel.com:80/v1/public/characters/" + current.id + "/events?orderBy=-name&limit=5&apikey=0e7466623241b56d92fc74e4d5039354'
-//            }).then(function (response) {
-//               $scope.events = response.data.data.results;
-//                console.log('events =');
-//                console.log($scope.events);
-//                return response;
-//            });
-//    //    };
-//
-
-
 var angular = require('angular');
 var angularRoute = require('angular-route');
 var app = angular.module('MarvelSuperHeroApp', ['ngRoute']);
@@ -47,7 +18,7 @@ app.config(['$routeProvider', function ($routeProvider) {
             templateUrl: 'sections/detail-view.html',
             //        resolve: 'DetailViewController.resolve'
         })
-        .when('/event', {
+        .when('/event/:event_number', {
             controller: 'EventViewController',
             templateUrl: 'sections/event-view.html',
         }).otherwise({
@@ -59,18 +30,8 @@ app.config(['$routeProvider', function ($routeProvider) {
 /*The view for the general list of heroes*/
 app.controller('ListViewController', ['$scope', '$http', 'CurrentHero', function ($scope, $http, CurrentHero) {
     console.log('ListView Switched');
-    
-//    setTimeout(function () {
-//        $scope.hithere = 'hello';
-//        $scope.heroes = CurrentHero.getHeroes();
-//        console.log('loading ' + $scope.heroes.length + ' heroes')
-////        console.log(CurrentHero.getHeroes());
-//    }, 1000);
-//        $scope.heroes = CurrentHero.getHeroes();
-
-    $scope.hithere = 'good day';
     $scope.heroes = CurrentHero.getHeroes();
-    
+
     /*This is run when clicked*/
     $scope.getDetails = function (hero) {
         console.log("clicked on " + hero.name);
@@ -82,7 +43,7 @@ app.controller('ListViewController', ['$scope', '$http', 'CurrentHero', function
 /*The view for the specifc list of a heroes' events*/
 app.controller('DetailViewController', ['$scope', '$http', 'CurrentHero', function ($scope, $http, CurrentHero) {
     console.log('DetailView Switched');
-    console.log(CurrentHero.checkID());
+    //    console.log(CurrentHero.checkID());
     //    CurrentHero.eventsAjax();
     CurrentHero.eventsAjax($http);
     $scope.events = CurrentHero.getEvents();
@@ -90,8 +51,19 @@ app.controller('DetailViewController', ['$scope', '$http', 'CurrentHero', functi
 }]);
 
 /*The view for the event details.*/
-app.controller('EventViewController', ['$scope', '$http', 'CurrentHero', function ($scope, $http, CurrentHero) {
+app.controller('EventViewController', ['$scope', '$http', 'CurrentHero', '$routeParams', function ($scope, $http, CurrentHero, $routeParams) {
     console.log('EventViewController Switched');
+    //    console.log($routeParams.event_number);
+    $scope.eventID = $routeParams.event_number;
+    CurrentHero.setEventID($routeParams.event_number);
+    CurrentHero.retrieveEventDetail($http);
+    CurrentHero.retrieveEventName($http);
+    $scope.characters = CurrentHero.getCharacters();
+    $scope.eventName = CurrentHero.setEventName();
+
+    /*Not registering the updated name change*/
+
+
 }]);
 
 /*The factory to create the CurrentHero service.*/
@@ -105,6 +77,15 @@ app.factory('CurrentHero', function ($http) {
     };
     var events = [];
 
+    /* eventDetail is where I will store data identifying the current event.
+    It should be filled when an event is clicked on in the detail view.*/
+
+    var eventDetailID = [];
+    var eventDetail = {
+        name: 'default',
+    };
+    var eventDetailCharacters = [];
+
     /*Initial AJAX request*/
     $http({
         method: 'get',
@@ -114,9 +95,9 @@ app.factory('CurrentHero', function ($http) {
         //        Luke's API
         //        url: 'http://gateway.marvel.com:80/v1/public/characters?limit=10&offset=500&apikey=ea904943b774d2e0bf732697141a07da',
     }).then(function (response) {
-//        for (let result of response.data.data.results) {
-//            heroes.push(result);
-//        }
+        //        for (let result of response.data.data.results) {
+        //            heroes.push(result);
+        //        }
         angular.copy(response.data.data.results, heroes);
     });
 
@@ -134,30 +115,59 @@ app.factory('CurrentHero', function ($http) {
             return current;
         },
         eventsAjax: function ($http) {
-            console.log('eventsAjax start');
-            console.log(current.id);
             $http({
                 method: 'get',
                 url: 'http://gateway.marvel.com:80/v1/public/characters/' + current.id + '/events?orderBy=-name&limit=5&apikey=0e7466623241b56d92fc74e4d5039354',
             }).then(function (response) {
                 angular.copy(response.data.data.results, events);
-                console.log(events);
-//                console.log('AJAX part2');
-//                console.log(response);
-//                events = response.data.data.results;
-//                console.log(events);
                 return response;
             });
         },
         getEvents: function () {
-            console.log('events =');
-            console.log(events);
             return events;
         },
         checkID: function () {
             return current.id;
         },
-
+        setEventID: function (id) {
+            eventDetailID = id;
+        },
+        retrieveEventDetail: function ($http) {
+            console.log('Retrieving event information!');
+            $http({
+                method: 'get',
+                url: 'http://gateway.marvel.com:80/v1/public/events/' + eventDetailID + '/characters?apikey=0e7466623241b56d92fc74e4d5039354',
+            }).then(function (response) {
+                //                console.log('response is');
+                //                console.log(response.data.data.results);
+                angular.copy(response.data.data.results, eventDetailCharacters);
+                console.log('eventDetailCharacters should be: ');
+                console.log(eventDetailCharacters);
+            });
+        },
+        getCharacters: function () {
+            return eventDetailCharacters;
+        },
+        retrieveEventName: function ($http) {
+            console.log('Retrieving name of the event');
+            $http({
+                method: 'get',
+                url: 'http://gateway.marvel.com:80/v1/public/events/' + eventDetailID +
+                    '?apikey=0e7466623241b56d92fc74e4d5039354'
+            }).then(function (response) {
+                console.log('Before updating the variable');
+                console.log(response.data.data.results[0].title);
+//                eventDetail.name = response.data.data.results[0].title;
+                angular.copy(response.data.data.results[0].title, eventDetail.name);
+                console.log('After updating the variable: ');
+                console.log(eventDetail.name);
+            });
+        },
+        setEventName: function () {
+//            console.log('Running setEventName');
+//            console.log(eventDetail.name);
+            return eventDetail.name;
+        }
     };
 
 });
