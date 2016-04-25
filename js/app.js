@@ -60,8 +60,13 @@ app.controller('EventViewController', ['$scope', '$http', 'CurrentHero', '$route
     CurrentHero.retrieveEventName($http);
     $scope.characters = CurrentHero.getCharacters();
     $scope.eventName = CurrentHero.setEventName();
-
     /*Not registering the updated name change*/
+     $scope.totalEvents = "zero";
+    
+    
+    
+    console.log('$scope.characters');
+    console.log($scope.characters);
 
 
 }]);
@@ -157,17 +162,24 @@ app.factory('CurrentHero', function ($http) {
             }).then(function (response) {
                 console.log('Before updating the variable');
                 console.log(response.data.data.results[0].title);
-//                eventDetail.name = response.data.data.results[0].title;
-                angular.copy(response.data.data.results[0].title, eventDetail.name);
+                //                eventDetail.name = response.data.data.results[0].title;
+//                angular.copy(response.data.data.results.title, eventDetail.name);
                 console.log('After updating the variable: ');
                 console.log(eventDetail.name);
             });
         },
         setEventName: function () {
-//            console.log('Running setEventName');
-//            console.log(eventDetail.name);
+            //            console.log('Running setEventName');
+            //            console.log(eventDetail.name);
             return eventDetail.name;
+        },
+        setTotalEvents: function () {
+            return "hello";
+        },
+        sendHero: function (data) {
+            console.log(data);
         }
     };
+
 
 });

@@ -57,7 +57,7 @@ header {
     justify-content: space-around;
     .view {
         width: 100%;
-        height: 600px;
+        height: 750px;
         display: inline-block;
         vertical-align: top;
         border-top: 1px solid $color-stack1;
@@ -69,9 +69,15 @@ header {
         background-color: gray;
         color: white;
         font-family: $font-stack1;
+        a {
+            text-decoration: none;
+            color: $color-stack3;
+        }
+        
     }
     #list-view {
 //        border: 1px solid blue;
+        height: 750px;
         overflow: auto;
 //        background-color: $color-stack2;
         li{
