@@ -1,16 +1,19 @@
 <h1>Character List </h1>
 <!--<h1>Characters of: {{ eventName }} </h1>-->
+<input type="text" id="event-search" placeholder="Search for a character within this event..." ng-model="search">
 <div id="event-detail-view">
-    <ul>
-        <li ng-repeat="character in characters" class="character">
-            <img src="{{character.thumbnail.path}}/standard_large.{{character.thumbnail.extension}}" alt="Hero thumbnail">
-            <div class="character-content">
-                <h2>{{character.name}}</h2>
-                <h3>Total Events: {{character.events.available}}</h3>
-                <p> Hero ID #:{{character.id}}</p>
-            </div>
-        </li>
 
+    <ul>
+        <a href="#/detail/:{{character.id}}" ng-repeat="character in characters | filter:search">
+            <li class="character" ng-click="newHero(character)">
+                <img src="{{character.thumbnail.path}}/standard_large.{{character.thumbnail.extension}}" alt="Hero thumbnail">
+                <div class="character-content">
+                    <h2>{{character.name}}</h2>
+                    <h3>Total Events: {{character.events.available}}</h3>
+                    <p> Hero ID #:{{character.id}}</p>
+                </div>
+            </li>
+        </a>
     </ul>
 
 
