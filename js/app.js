@@ -13,7 +13,7 @@ app.config(['$routeProvider', function ($routeProvider) {
             templateUrl: 'sections/list-view.html',
             //            resolve: 'ListViewController.resolve'
         })
-        .when('/detail', {
+        .when('/detail/:hero_number', {
             controller: 'DetailViewController',
             templateUrl: 'sections/detail-view.html',
             //        resolve: 'DetailViewController.resolve'
@@ -41,7 +41,7 @@ app.controller('ListViewController', ['$scope', '$http', 'CurrentHero', function
 }]);
 
 /*The view for the specifc list of a heroes' events*/
-app.controller('DetailViewController', ['$scope', '$http', 'CurrentHero', function ($scope, $http, CurrentHero) {
+app.controller('DetailViewController', ['$scope', '$http', 'CurrentHero', '$routeParams', function ($scope, $http, CurrentHero, $routeParams) {
     console.log('DetailView Switched');
     //    console.log(CurrentHero.checkID());
     //    CurrentHero.eventsAjax();
@@ -64,10 +64,13 @@ app.controller('EventViewController', ['$scope', '$http', 'CurrentHero', '$route
      $scope.totalEvents = "zero";
     
     
-    
     console.log('$scope.characters');
     console.log($scope.characters);
 
+    $scope.newHero = function (character) {
+        console.log('Running newHero');
+        CurrentHero.setCurrent(character);
+    };
 
 }]);
 
