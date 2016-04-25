@@ -139,3 +139,10 @@ header {
 .character-content {
     display: inline-block;
 }
+
+#list-search, #event-search {
+    font-size: 1.2em;
+    height: 40px;
+    width: 40%;
+    margin-bottom: 10px;
+}
