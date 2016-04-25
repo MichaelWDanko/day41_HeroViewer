@@ -4,7 +4,7 @@
 <div id="event-detail-view">
 
     <ul>
-        <a href="#/detail/:{{character.id}}" ng-repeat="character in characters | filter:search">
+        <a href="#/detail/{{character.id}}" ng-repeat="character in characters | filter:search">
             <li class="character" ng-click="newHero(character)">
                 <img src="{{character.thumbnail.path}}/standard_large.{{character.thumbnail.extension}}" alt="Hero thumbnail">
                 <div class="character-content">

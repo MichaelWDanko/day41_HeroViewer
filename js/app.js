@@ -11,12 +11,10 @@ app.config(['$routeProvider', function ($routeProvider) {
         .when('/list', {
             controller: 'ListViewController',
             templateUrl: 'sections/list-view.html',
-            //            resolve: 'ListViewController.resolve'
         })
         .when('/detail/:hero_number', {
             controller: 'DetailViewController',
             templateUrl: 'sections/detail-view.html',
-            //        resolve: 'DetailViewController.resolve'
         })
         .when('/event/:event_number', {
             controller: 'EventViewController',
@@ -44,8 +42,6 @@ app.controller('ListViewController', ['$scope', '$http', 'CurrentHero', function
 /*The view for the specifc list of a heroes' events*/
 app.controller('DetailViewController', ['$scope', '$http', 'CurrentHero', '$routeParams', function ($scope, $http, CurrentHero, $routeParams) {
     console.log('DetailView Switched');
-    //    console.log(CurrentHero.checkID());
-    //    CurrentHero.eventsAjax();
     CurrentHero.eventsAjax($http);
     $scope.events = CurrentHero.getEvents();
     $scope.current = CurrentHero.getCurrent();
@@ -100,13 +96,7 @@ app.factory('CurrentHero', function ($http) {
         method: 'get',
         //        My API
         url: 'http://gateway.marvel.com:80/v1/public/characters?limit=100&apikey=0e7466623241b56d92fc74e4d5039354',
-        //                                                                                          0e7466623241b56d92fc74e4d5039354        
-        //        Luke's API
-        //        url: 'http://gateway.marvel.com:80/v1/public/characters?limit=10&offset=500&apikey=ea904943b774d2e0bf732697141a07da',
     }).then(function (response) {
-        //        for (let result of response.data.data.results) {
-        //            heroes.push(result);
-        //        }
         angular.copy(response.data.data.results, heroes);
     });
 
@@ -173,8 +163,6 @@ app.factory('CurrentHero', function ($http) {
             });
         },
         setEventName: function () {
-            //            console.log('Running setEventName');
-            //            console.log(eventDetail.name);
             return eventDetail.name;
         },
         setTotalEvents: function () {
